@@ -4,7 +4,8 @@ import bcrypt from "bcryptjs";
 import cloudinary from "../lib/cloudinary.js";
 
 export const signup = async (req, res) => {
-  const { fullName, email, password, bio } = req.body;
+  let { fullName, email, password, bio } = req.body;
+  if (email) email = email.toLowerCase();
 
   try {
     if (!fullName || !email || !password || !bio) {
@@ -43,7 +44,8 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
+    if (email) email = email.toLowerCase();
 
     const userData = await User.findOne({ email });
 
