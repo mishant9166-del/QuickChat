@@ -10,8 +10,7 @@ const SideBar = () => {
   const navigate = useNavigate();
   const[input,setInput] = useState(false);
   const {logout,onlineUsers} = useContext(AuthContext);
-  const filteredUsers = input ? users.filter((user) => user.fullName.toLowerCase().includes(input.toLowerCase())) : users;
-
+  const filteredUsers = input ? users.filter((user) => (user.fullName || user.name || "").toLowerCase().includes(input.toLowerCase())) : users;
   useEffect(() => {
     getUsers();
   }, [onlineUsers]);
@@ -42,7 +41,7 @@ const SideBar = () => {
             <img src={user?.profilePic || assets.avatar_icon} alt="" 
              className='w-[35px] aspect-[1/1] roundend-full' />
              <div className=' flex flex-col leading-5'>
-              <p>{user.fullName}</p>
+              <p>{user.fullName || user.name}</p>
               {
                 onlineUsers.includes(user._id) ?  <span className = 'text-green-400 text-xs'>Online</span> : <span className = 'text-neutral-400 text-xs'>Offline</span>
               }
